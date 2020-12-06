@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="member">
+
+	<select id="list"
+		resultType="com.example.spring01.model.dto.MemberDTO">
+		select * from sb_member order by name
+	</select>
+
+	<select id="insert">
+		insert into sb_member (userid, passwd, name, email, regDate)
+		values
+		(#{userid}, #{passwd}, #{name}, #{email}, sysdate)
+	</select>
+	
+	<select id="detail"
+		resultType="com.example.spring01.model.dto.MemberDTO">
+		select * from sb_member
+		where userid=#{userid}
+		<!-- #{값}은 전달된 값-->
+	</select>
+
+	<!-- 회원정보 수정 -->
+	<update id="update">
+		update sb_member
+		set passwd=#{passwd},
+		name=#{name},
+		email=#{email}
+	</update>
+	
+	<!-- 회원정보 삭제 -->
+	<delete id="delete">
+		delete from sb_member
+		where userid=#{userid}
+	</delete>
+
+	<!-- 비밀번호 체크 -->
+	<select id="check_passwd" resultType="int">
+		select count(*) from sb_member
+		where userid=#{userid} and passwd=#{passwd}
+	
+	</select>
+
+</mapper>
